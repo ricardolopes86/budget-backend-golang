@@ -14,6 +14,11 @@ type CreateEntradaInput struct {
 	CreatedAt time.Time `json:"created_at" binding:"required"`
 }
 
+type UpdateEntradaInput struct {
+	Valor     float64   `json:"valor" binding:"required"`
+	CreatedAt time.Time `json:"created_at" binding:"required"`
+}
+
 func CreateEntrada(c *gin.Context) {
 	var input CreateEntradaInput
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -55,4 +60,23 @@ func DeleteEntrada(c *gin.Context) {
 
 	models.DB.Delete(&entrada)
 	c.JSON(http.StatusOK, gin.H{"data": "data deleted"})
+}
+
+func UpdateEntrada(c *gin.Context) {
+	var entrada models.Entrada
+	if err := models.DB.Where("id = ?", c.Param("id")).First(&entrada).Error; err != nil {
+		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "record not found"})
+		return
+	}
+
+	var input UpdateEntradaInput
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	updatedEntrada := models.Entrada{Valor: input.Valor, CreatedAt: input.CreatedAt}
+	models.DB.Model(&entrada).Update(&updatedEntrada)
+	c.JSON(http.StatusOK, gin.H{"data": entrada})
 }
