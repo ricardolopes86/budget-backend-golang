@@ -77,6 +77,6 @@ func UpdateEntrada(c *gin.Context) {
 	}
 
 	updatedEntrada := models.Entrada{Valor: input.Valor, CreatedAt: input.CreatedAt}
-	models.DB.Model(&entrada).Update(&updatedEntrada)
+	models.DB.Model(&entrada).Updates(&updatedEntrada)
 	c.JSON(http.StatusOK, gin.H{"data": entrada})
 }
