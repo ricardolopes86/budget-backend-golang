@@ -13,6 +13,9 @@ func main() {
 	models.ConnectDatabase()
 
 	router.POST("/entradas", controllers.CreateEntrada)
+	router.GET("/entradas", controllers.FindEntradas)
+	router.GET("/entradas/:id", controllers.FindEntrada)
+	router.DELETE("/entradas/:id", controllers.DeleteEntrada)
 
 	router.Run("localhost:9000")
 }
