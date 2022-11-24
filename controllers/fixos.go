@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -9,25 +10,25 @@ import (
 )
 
 type CreateFixosInput struct {
-	Contas      float64 `json:"contas"`
-	Assinaturas float64 `json:"assinaturas"`
-	Seguros     float64 `json:"seguros"`
-	Mesadas     float64 `json:"mesadas"`
-	Impostos    float64 `json:"impostos"`
-	Outros      float64 `json:"outros"`
-	Mes         int     `json:"mes" binding:"required"`
-	Ano         int     `json:"ano" binding:"required"`
+	Contas      json.Number `json:"contas"`
+	Assinaturas json.Number `json:"assinaturas"`
+	Seguros     json.Number `json:"seguros"`
+	Mesadas     json.Number `json:"mesadas"`
+	Impostos    json.Number `json:"impostos"`
+	Outros      json.Number `json:"outros"`
+	Mes         json.Number `json:"mes" binding:"required"`
+	Ano         json.Number `json:"ano" binding:"required"`
 }
 
 type UpdateFixosInput struct {
-	Contas      float64 `json:"contas"`
-	Assinaturas float64 `json:"assinaturas"`
-	Seguros     float64 `json:"seguros"`
-	Mesadas     float64 `json:"mesadas"`
-	Impostos    float64 `json:"impostos"`
-	Outros      float64 `json:"outros"`
-	Mes         int     `json:"mes" binding:"required"`
-	Ano         int     `json:"ano" binding:"required"`
+	Contas      json.Number `json:"contas"`
+	Assinaturas json.Number `json:"assinaturas"`
+	Seguros     json.Number `json:"seguros"`
+	Mesadas     json.Number `json:"mesadas"`
+	Impostos    json.Number `json:"impostos"`
+	Outros      json.Number `json:"outros"`
+	Mes         json.Number `json:"mes" binding:"required"`
+	Ano         json.Number `json:"ano" binding:"required"`
 }
 
 func CreateFixos(c *gin.Context) {
@@ -37,7 +38,7 @@ func CreateFixos(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
+	fmt.Println("creating Fixo")
 	Fixo := models.Fixos{Contas: input.Contas, Assinaturas: input.Assinaturas, Seguros: input.Seguros, Mesadas: input.Mesadas, Impostos: input.Impostos, Outros: input.Outros, Mes: input.Mes, Ano: input.Ano}
 	models.DB.Create(&Fixo)
 

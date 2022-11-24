@@ -1,13 +1,15 @@
 package models
 
+import "encoding/json"
+
 type Fixos struct {
-	ID          uint    `json:"id" gorm:"primaryKey"`
-	Contas      float64 `json:"contas"`
-	Assinaturas float64 `json:"assinaturas"`
-	Seguros     float64 `json:"seguros"`
-	Mesadas     float64 `json:"mesadas"`
-	Impostos    float64 `json:"impostos"`
-	Outros      float64 `json:"outros"`
-	Mes         int     `json:"mes"`
-	Ano         int     `json:"ano"`
+	ID          uint        `json:"id" gorm:"primaryKey"`
+	Contas      json.Number `json:"contas" gorm:"column:Contas"`
+	Assinaturas json.Number `json:"assinaturas" gorm:"column:Assinaturas"`
+	Seguros     json.Number `json:"seguros" gorm:"column:Seguros"`
+	Mesadas     json.Number `json:"mesadas" gorm:"column:Mesadas"`
+	Impostos    json.Number `json:"impostos" gorm:"column:Impostos"`
+	Outros      json.Number `json:"outros" gorm:"column:Outros"`
+	Mes         json.Number `json:"mes"`
+	Ano         json.Number `json:"ano"`
 }
